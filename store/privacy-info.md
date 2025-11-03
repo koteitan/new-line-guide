@@ -1,97 +1,68 @@
-# Privacy Policy for New Line Guide
+# Chrome Web Store Dashboard - Privacy Information
 
-Last updated: [Date]
+This file contains the information to input in the Privacy tab of Chrome Web Store Developer Dashboard.
 
-## Overview
+---
 
-New Line Guide ("the Extension") is committed to protecting your privacy. This privacy policy explains what data the Extension collects, how it is used, and your rights regarding that data.
+## 1. Single Purpose (単一用途)
 
-## Data Collection
+```
+Shows a helpful guide "new line = shift + enter" above text input forms on ChatGPT and Claude websites
+```
 
-**The Extension does NOT collect, store, or transmit any personal information or browsing data.**
+---
 
-### What Data is Stored Locally
+## 2. Permission Justification - storage (storage 権限が必要な理由)
 
-The Extension only stores the following user preferences locally on your device using Chrome's sync storage API:
+```
+Used to save user preferences (extension enabled/disabled, debug logging on/off) using chrome.storage.sync API. No personal data is collected or transmitted.
+```
 
-1. **Extension Enabled/Disabled** (boolean)
-   - Purpose: To enable or disable the extension functionality
-   - Storage: Chrome sync storage (synced across your Chrome browsers if signed in)
+---
 
-2. **Debug Print Enabled/Disabled** (boolean)
-   - Purpose: To enable or disable console logging for debugging
-   - Storage: Chrome sync storage (synced across your Chrome browsers if signed in)
+## 3. Host Permissions Justification (ホスト権限が必要な理由)
 
-### No Third-Party Services
+```
+The extension only runs on https://chatgpt.com/* and https://claude.ai/* to detect text input areas and display the guide on these specific websites. No other websites are accessed.
+```
 
-The Extension does NOT use:
-- Analytics services
-- Tracking scripts
-- Third-party APIs
-- External servers
-- Cookies
+---
 
-## How Data is Used
+## 4. Do you use remote code? (リモートコードを使用していますか？)
 
-The locally stored preferences are used solely to:
-- Control whether the extension displays the "new line = shift + enter" guide
-- Control whether debug messages are printed to the browser console
+```
+No
+```
 
-## Data Sharing
+---
 
-**The Extension does NOT share any data with third parties.** All data stays on your device or is synced through Chrome's built-in sync mechanism if you're signed into Chrome.
+## 5. Data Usage (データ使用)
 
-## Permissions Explanation
+### What user data do you collect?
 
-### "storage" Permission
-- **Why needed**: To save user preferences (enabled/disabled, debug logging)
-- **What it accesses**: Chrome's sync storage API for storing preferences
-- **Data stored**: Only the two boolean settings mentioned above
+**All categories: NO (すべて「いいえ」)**
 
-### Host Permissions
-The Extension only runs on these specific websites:
-- `https://chatgpt.com/*`
-- `https://claude.ai/*`
+- ❌ Personally identifiable information (個人を特定できる情報)
+- ❌ Health information (健康に関する情報)
+- ❌ Financial and payment information (財務状況や支払いに関する情報)
+- ❌ Authentication information (認証に関する情報)
+- ❌ Personal communications (個人的コミュニケーション)
+- ❌ Location (位置情報)
+- ❌ Web history (ウェブ履歴)
+- ❌ User activity (ユーザーのアクティビティ)
+- ❌ Website content (ウェブサイトのコンテンツ)
 
-**Why needed**: To detect text input areas and display the guide on these websites.
+### Explanation:
 
-## Data Security
+```
+This extension does not collect any user data. It only stores user preferences (enabled/disabled, debug logging on/off) locally using Chrome's sync storage. No personal information, browsing data, or website content is collected, stored, or transmitted.
+```
 
-Since the Extension does not collect or transmit any data, there is no data security risk beyond the standard Chrome sync storage mechanism provided by Google Chrome.
+---
 
-## Changes to Extension Behavior
+## Additional Privacy Information
 
-The Extension:
-- Only modifies the visual appearance by adding a small text guide above input fields
-- Does not intercept, modify, or access the content you type
-- Does not monitor your browsing activity
-- Does not access any other websites beyond the two specified domains
-
-## Your Rights
-
-You can:
-- Disable the extension at any time from Chrome's extensions page
-- Remove the extension completely to delete all stored preferences
-- View and modify your preferences from the extension's options page
-
-## Updates to This Privacy Policy
-
-Any changes to this privacy policy will be reflected in the Extension's repository and in the Chrome Web Store listing.
-
-## Contact
-
-If you have questions about this privacy policy or the Extension's behavior, please:
-- Open an issue on GitHub: https://github.com/koteitan/new-line-guide
-- Contact: [Your email address]
-
-## Compliance
-
-This Extension complies with:
-- Chrome Web Store Developer Program Policies
-- Limited Use requirements for Chrome extensions
-- User Data Privacy requirements
-
-## Open Source
-
-The Extension is open source. You can review the source code at:
-https://github.com/koteitan/new-line-guide
+- **No analytics or tracking**: This extension does not use any analytics, tracking, or third-party services
+- **No data transmission**: All data stays on the user's device
+- **Open source**: Source code is available at https://github.com/koteitan/new-line-guide
+- **No advertisements**: This extension does not display any advertisements
