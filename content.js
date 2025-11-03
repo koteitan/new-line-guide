@@ -4,12 +4,19 @@
 (function() {
   'use strict';
 
-  const VERSION = '1.0.1';
+  const VERSION = '1.0.4';
   console.log('[New Line Guide] Version:', VERSION);
   console.log('[New Line Guide] Extension loaded on:', window.location.hostname);
 
-  // Function to add guide to an element (textarea or contenteditable)
-  function addGuideToElement(element) {
+  // Detect which site we're on
+  const isChatGPT = window.location.hostname === 'chatgpt.com';
+  const isClaude = window.location.hostname === 'claude.ai';
+
+  console.log('[New Line Guide] Site detection - ChatGPT:', isChatGPT, 'Claude:', isClaude);
+
+  // Function to add guide for ChatGPT
+  function addGuideToElementChatGPT(element) {
+    console.log('[New Line Guide] Using ChatGPT-specific function');
     // Check if guide already exists
     if (element.dataset.newlineGuideAdded) {
       return;
@@ -60,6 +67,83 @@
     container.appendChild(guide);
 
     console.log('[New Line Guide] Guide added successfully to container:', container.tagName, container.className);
+  }
+
+  // Function to add guide for Claude
+  function addGuideToElementClaude(element) {
+    console.log('[New Line Guide] Using Claude-specific function');
+    // Check if guide already exists
+    if (element.dataset.newlineGuideAdded) {
+      return;
+    }
+
+    console.log('[New Line Guide] Adding guide to element:', element);
+
+    // Mark as processed
+    element.dataset.newlineGuideAdded = 'true';
+
+    // Create guide element with fixed positioning to avoid z-index stacking issues
+    const guide = document.createElement('div');
+    guide.className = 'newline-guide';
+    guide.textContent = 'new line = shift + enter';
+    guide.setAttribute('data-newline-guide', 'true');
+
+    // Use fixed positioning to escape parent stacking context
+    guide.style.position = 'fixed';
+    guide.style.zIndex = '9999999';
+    guide.style.opacity = '1';
+
+    // Function to update position
+    function updatePosition() {
+      const rect = element.getBoundingClientRect();
+      const windowWidth = window.innerWidth;
+      const calculatedRight = windowWidth - rect.right + 8;
+
+      guide.style.top = (rect.top - 32) + 'px';
+      guide.style.right = calculatedRight + 'px';
+
+      // Hide if element is not visible
+      if (rect.width === 0 || rect.height === 0) {
+        guide.style.display = 'none';
+      } else {
+        guide.style.display = 'inline-block';
+      }
+    }
+
+    // Add to body
+    document.body.appendChild(guide);
+
+    // Initial position
+    setTimeout(updatePosition, 10);
+
+    // Update on scroll and resize
+    window.addEventListener('scroll', updatePosition, true);
+    window.addEventListener('resize', updatePosition);
+
+    // Update periodically
+    const intervalId = setInterval(() => {
+      if (!document.body.contains(element)) {
+        clearInterval(intervalId);
+        if (guide.parentElement) {
+          guide.remove();
+        }
+      } else {
+        updatePosition();
+      }
+    }, 500);
+
+    console.log('[New Line Guide] Guide added with fixed positioning');
+  }
+
+  // Unified function that calls the appropriate site-specific function
+  function addGuideToElement(element) {
+    if (isChatGPT) {
+      addGuideToElementChatGPT(element);
+    } else if (isClaude) {
+      addGuideToElementClaude(element);
+    } else {
+      console.log('[New Line Guide] Unknown site, skipping');
+    }
   }
 
   // Function to process all input elements on the page
