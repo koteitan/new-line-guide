@@ -65,4 +65,4 @@ This extension works on ChatGPT (chatgpt.com) and Claude (claude.ai) with differ
 
 ## License
 
-MIT License
+[MIT License](LICENSE)
