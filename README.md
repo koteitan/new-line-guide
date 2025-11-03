@@ -1,62 +1,62 @@
-# New Line Guide - Chrome Extension
+# New Line Guide
 
-テキストエリアの横に「new line = shift + enter」というガイドを表示するChrome拡張機能です。
+![Sample screenshot](images/sample.png)
 
-## 機能
+A Chrome extension that displays a helpful guide "new line = shift + enter" above text input areas on ChatGPT and Claude websites.
 
-- すべてのウェブページのtextarea要素の横に改行ガイドを自動表示
-- 動的に追加されるtextareaにも対応
-- ダークモード対応
-- 軽量で邪魔にならないデザイン
+## 1. How to Install
 
-## インストール方法
+### Install as an unpacked extension
 
-### 開発版として読み込む
+1. Open Chrome and navigate to `chrome://extensions/`
+2. Enable **Developer mode** (toggle switch in the top right corner)
+3. Click **Load unpacked** button
+4. Select the directory containing this extension:
+   - If using WSL: `\\wsl$\Ubuntu\home\YOUR_USERNAME\code\new-line-guide`
+   - If copied to Windows: `C:\extensions\new-line-guide` (or your chosen location)
+5. The extension will be loaded and activated
 
-1. Chromeで`chrome://extensions/`を開く
-2. 右上の「デベロッパーモード」をONにする
-3. 「パッケージ化されていない拡張機能を読み込む」をクリック
-4. このディレクトリを選択
+### Using the Makefile (for WSL users)
 
-### アイコンについて
-
-この拡張機能を完全に動作させるには、以下のアイコンファイルが必要です：
-- `icon16.png` (16x16 ピクセル)
-- `icon48.png` (48x48 ピクセル)
-- `icon128.png` (128x128 ピクセル)
-
-アイコンを作成するか、一時的に以下のコマンドでプレースホルダー画像を作成できます：
+If you're using WSL, you can use the provided Makefile to copy files to Windows:
 
 ```bash
-# ImageMagickを使用する場合
-convert -size 16x16 xc:#4285f4 -gravity center -pointsize 10 -fill white -annotate +0+0 "N" icon16.png
-convert -size 48x48 xc:#4285f4 -gravity center -pointsize 30 -fill white -annotate +0+0 "N" icon48.png
-convert -size 128x128 xc:#4285f4 -gravity center -pointsize 80 -fill white -annotate +0+0 "N" icon128.png
+make install
 ```
 
-または、オンラインツールで簡単なアイコンを作成してください。
+This will copy the extension files to `C:\extensions\new-line-guide`.
 
-## ファイル構成
+## 2. Specification
 
-```
-.
-├── manifest.json     # 拡張機能の設定ファイル
-├── content.js        # コンテンツスクリプト（ガイド表示ロジック）
-├── styles.css        # スタイルシート
-├── icon16.png        # 16x16 アイコン（作成が必要）
-├── icon48.png        # 48x48 アイコン（作成が必要）
-└── icon128.png       # 128x128 アイコン（作成が必要）
-```
+### What it does
 
-## 使い方
+- **Detects input areas**: Automatically finds both `<textarea>` and `contenteditable` elements
+- **Displays guide**: Shows "new line = shift + enter" above the input area
+- **Non-intrusive**: Positioned above the input field to avoid interfering with typing
+- **Dynamic detection**: Works with dynamically loaded elements using IntersectionObserver and MutationObserver
+- **Smart positioning**: Avoids overflow containers to ensure visibility
+- **Dark mode support**: Automatically adapts to light/dark color schemes
 
-拡張機能をインストール後、任意のウェブページのテキストエリアの横に「new line = shift + enter」というガイドが表示されます。
+### Supported websites
 
-特に以下のようなサイトで便利です：
-- ChatGPT
-- Claude
-- その他のチャットインターフェース
+- ChatGPT (https://chatgpt.com/)
+- Claude (https://claude.ai/)
 
-## ライセンス
+### Technical details
+
+- **Version**: 1.0.1
+- **Positioning**: Absolute positioning at `top: -32px` relative to parent container
+- **Font size**: 12px
+- **Detection**: Searches up to 8 parent levels to find suitable container without overflow
+- **Visibility check**: Only adds guide to visible elements (width > 100px, height > 30px)
+
+### Files
+
+- `manifest.json` - Chrome extension configuration
+- `content.js` - Main content script for detecting and adding guides
+- `styles.css` - Styling for the guide element
+- `Makefile` - Installation helper for WSL users
+
+## License
 
 MIT License
