@@ -1,2 +1,6 @@
 # Sample web pages
 samples/
+
+# Build artifacts
+store/*.zip
+unpacked/

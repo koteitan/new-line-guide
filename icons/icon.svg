@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="128" height="128" fill="#4A90E2" rx="16"/>
+
+  <!-- Shift key -->
+  <rect x="16" y="40" width="40" height="32" fill="white" rx="4"/>
+  <text x="36" y="61" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4A90E2" text-anchor="middle">⇧</text>
+
+  <!-- Plus sign -->
+  <text x="64" y="61" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">+</text>
+
+  <!-- Enter key -->
+  <rect x="72" y="40" width="40" height="32" fill="white" rx="4"/>
+  <text x="92" y="61" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4A90E2" text-anchor="middle">↵</text>
+
+  <!-- Bottom text -->
+  <text x="64" y="95" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle" font-weight="500">new line</text>
+</svg>

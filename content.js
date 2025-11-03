@@ -4,27 +4,48 @@
 (function() {
   'use strict';
 
-  const VERSION = '1.0.5';
-  console.log('[New Line Guide] Version:', VERSION);
-  console.log('[New Line Guide] Extension loaded on:', window.location.hostname);
+  const VERSION = '1.0.8';
 
-  // Detect which site we're on
-  const isChatGPT = window.location.hostname === 'chatgpt.com';
-  const isClaude = window.location.hostname === 'claude.ai';
+  // Load settings and initialize
+  const DEFAULT_SETTINGS = {
+    enabled: true,
+    debugPrint: false
+  };
 
-  console.log('[New Line Guide] Site detection - ChatGPT:', isChatGPT, 'Claude:', isClaude);
+  chrome.storage.sync.get(DEFAULT_SETTINGS, (settings) => {
+    // Debug log wrapper
+    const debugLog = (...args) => {
+      if (settings.debugPrint) {
+        console.log(...args);
+      }
+    };
+
+    // Check if extension is enabled
+    if (!settings.enabled) {
+      debugLog('[New Line Guide] Extension disabled');
+      return;
+    }
+
+    debugLog('[New Line Guide] Version:', VERSION);
+    debugLog('[New Line Guide] Extension loaded on:', window.location.hostname);
+
+    // Detect which site we're on
+    const isChatGPT = window.location.hostname === 'chatgpt.com';
+    const isClaude = window.location.hostname === 'claude.ai';
+
+    debugLog('[New Line Guide] Site detection - ChatGPT:', isChatGPT, 'Claude:', isClaude);
 
   // Function to add guide for ChatGPT
   function addGuideToElementChatGPT(element) {
-    console.log('[New Line Guide] Using ChatGPT-specific function');
+    debugLog('[New Line Guide] Using ChatGPT-specific function');
     // Check if guide already exists
     if (element.dataset.newlineGuideAdded) {
       return;
     }
 
-    console.log('[New Line Guide] Adding guide to element:', element);
-    console.log('[New Line Guide] Element classes:', element.className);
-    console.log('[New Line Guide] Element parent:', element.parentElement);
+    debugLog('[New Line Guide] Adding guide to element:', element);
+    debugLog('[New Line Guide] Element classes:', element.className);
+    debugLog('[New Line Guide] Element parent:', element.parentElement);
 
     // Mark as processed
     element.dataset.newlineGuideAdded = 'true';
@@ -44,12 +65,12 @@
     while (current && depth < 8) {
       const style = window.getComputedStyle(current);
       const hasOverflow = style.overflow !== 'visible' || style.overflowY !== 'visible' || style.overflowX !== 'visible';
-      console.log('[New Line Guide] Checking parent depth', depth, ':', current.tagName, 'position:', style.position, 'overflow:', hasOverflow);
+      debugLog('[New Line Guide] Checking parent depth', depth, ':', current.tagName, 'position:', style.position, 'overflow:', hasOverflow);
 
       // Look for a positioned container without overflow, or go higher up
       if (!hasOverflow && (style.position === 'relative' || style.position === 'absolute')) {
         container = current;
-        console.log('[New Line Guide] Found good container:', container);
+        debugLog('[New Line Guide] Found good container:', container);
         break;
       }
       current = current.parentElement;
@@ -59,25 +80,25 @@
     // If container doesn't have position, set it
     const containerStyle = window.getComputedStyle(container);
     if (containerStyle.position === 'static') {
-      console.log('[New Line Guide] Setting container position to relative');
+      debugLog('[New Line Guide] Setting container position to relative');
       container.style.position = 'relative';
     }
 
     // Add guide to container
     container.appendChild(guide);
 
-    console.log('[New Line Guide] Guide added successfully to container:', container.tagName, container.className);
+    debugLog('[New Line Guide] Guide added successfully to container:', container.tagName, container.className);
   }
 
   // Function to add guide for Claude
   function addGuideToElementClaude(element) {
-    console.log('[New Line Guide] Using Claude-specific function');
+    debugLog('[New Line Guide] Using Claude-specific function');
     // Check if guide already exists
     if (element.dataset.newlineGuideAdded) {
       return;
     }
 
-    console.log('[New Line Guide] Adding guide to element:', element);
+    debugLog('[New Line Guide] Adding guide to element:', element);
 
     // Mark as processed
     element.dataset.newlineGuideAdded = 'true';
@@ -132,7 +153,7 @@
       }
     }, 500);
 
-    console.log('[New Line Guide] Guide added with fixed positioning');
+    debugLog('[New Line Guide] Guide added with fixed positioning');
   }
 
   // Unified function that calls the appropriate site-specific function
@@ -142,7 +163,7 @@
     } else if (isClaude) {
       addGuideToElementClaude(element);
     } else {
-      console.log('[New Line Guide] Unknown site, skipping');
+      debugLog('[New Line Guide] Unknown site, skipping');
     }
   }
 
@@ -154,7 +175,7 @@
     const editables = document.querySelectorAll('[contenteditable="true"]');
 
     const allElements = [...textareas, ...editables];
-    console.log('[New Line Guide] Found', textareas.length, 'textareas and', editables.length, 'contenteditable elements');
+    debugLog('[New Line Guide] Found', textareas.length, 'textareas and', editables.length, 'contenteditable elements');
 
     allElements.forEach(element => {
       // Check if element is visible
@@ -163,7 +184,7 @@
       const style = window.getComputedStyle(element);
       const isDisplayed = style.display !== 'none' && style.visibility !== 'hidden';
 
-      console.log('[New Line Guide] Element dimensions:', rect.width, 'x', rect.height, 'visible:', isVisible, 'displayed:', isDisplayed);
+      debugLog('[New Line Guide] Element dimensions:', rect.width, 'x', rect.height, 'visible:', isVisible, 'displayed:', isDisplayed);
 
       // Only add guide to visible elements with reasonable size
       if (isVisible && isDisplayed && rect.width > 100 && rect.height > 20) {
@@ -174,7 +195,7 @@
 
   // Initial processing with delay
   function init() {
-    console.log('[New Line Guide] Initializing...');
+    debugLog('[New Line Guide] Initializing...');
     processInputElements();
 
     // Try again after 1 second (for SPAs)
@@ -211,7 +232,7 @@
     });
 
     if (shouldProcess) {
-      console.log('[New Line Guide] New input element detected, processing...');
+      debugLog('[New Line Guide] New input element detected, processing...');
       setTimeout(processInputElements, 100);
     }
   });
@@ -227,12 +248,12 @@
     const isEditable = e.target.getAttribute('contenteditable') === 'true';
 
     if (isTextarea || isEditable) {
-      console.log('[New Line Guide] Input element focused');
+      debugLog('[New Line Guide] Input element focused');
       if (!e.target.dataset.newlineGuideAdded) {
-        console.log('[New Line Guide] Adding guide on focus');
+        debugLog('[New Line Guide] Adding guide on focus');
         setTimeout(() => {
           const rect = e.target.getBoundingClientRect();
-          console.log('[New Line Guide] Element dimensions on focus:', rect.width, 'x', rect.height);
+          debugLog('[New Line Guide] Element dimensions on focus:', rect.width, 'x', rect.height);
           if (rect.width > 100 && rect.height > 20) {
             addGuideToElement(e.target);
           }
@@ -249,7 +270,7 @@
         const isEditable = entry.target.getAttribute('contenteditable') === 'true';
 
         if (isTextarea || isEditable) {
-          console.log('[New Line Guide] Input element became visible');
+          debugLog('[New Line Guide] Input element became visible');
           setTimeout(() => {
             const rect = entry.target.getBoundingClientRect();
             if (rect.width > 100 && rect.height > 20) {
@@ -269,5 +290,6 @@
     });
   }, 1000);
 
-  console.log('[New Line Guide] Monitoring started');
+  debugLog('[New Line Guide] Monitoring started');
+  }); // End of chrome.storage.sync.get callback
 })();
