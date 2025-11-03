@@ -4,7 +4,7 @@
 (function() {
   'use strict';
 
-  const VERSION = '1.0.4';
+  const VERSION = '1.0.5';
   console.log('[New Line Guide] Version:', VERSION);
   console.log('[New Line Guide] Extension loaded on:', window.location.hostname);
 
@@ -166,7 +166,7 @@
       console.log('[New Line Guide] Element dimensions:', rect.width, 'x', rect.height, 'visible:', isVisible, 'displayed:', isDisplayed);
 
       // Only add guide to visible elements with reasonable size
-      if (isVisible && isDisplayed && rect.width > 100 && rect.height > 30) {
+      if (isVisible && isDisplayed && rect.width > 100 && rect.height > 20) {
         addGuideToElement(element);
       }
     });
@@ -233,7 +233,7 @@
         setTimeout(() => {
           const rect = e.target.getBoundingClientRect();
           console.log('[New Line Guide] Element dimensions on focus:', rect.width, 'x', rect.height);
-          if (rect.width > 100 && rect.height > 30) {
+          if (rect.width > 100 && rect.height > 20) {
             addGuideToElement(e.target);
           }
         }, 100);
@@ -252,7 +252,7 @@
           console.log('[New Line Guide] Input element became visible');
           setTimeout(() => {
             const rect = entry.target.getBoundingClientRect();
-            if (rect.width > 100 && rect.height > 30) {
+            if (rect.width > 100 && rect.height > 20) {
               addGuideToElement(entry.target);
             }
           }, 100);
