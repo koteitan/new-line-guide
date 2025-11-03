@@ -4,7 +4,7 @@
 (function() {
   'use strict';
 
-  const VERSION = '1.1.0';
+  const VERSION = '1.0.1';
   console.log('[New Line Guide] Version:', VERSION);
   console.log('[New Line Guide] Extension loaded on:', window.location.hostname);
 
