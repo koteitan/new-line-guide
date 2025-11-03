@@ -3,6 +3,6 @@
 - You talk to me in Japanese.
 
 # git rule
-- git add/commit/push only if I say so.
+- git add/commit/push/pull only if I say so.
 - don't restore/rebase/reset/checkout.
 
