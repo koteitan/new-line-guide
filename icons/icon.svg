@@ -3,6 +3,13 @@
   <!-- Background -->
   <rect width="128" height="128" fill="#4A90E2" rx="16"/>
 
-  <!-- Enter/Return symbol (↵) -->
-  <text x="64" y="85" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white" text-anchor="middle">↵</text>
+  <!-- Enter/Return symbol drawn with paths -->
+  <!-- Horizontal line -->
+  <path d="M 35 45 L 85 45" stroke="white" stroke-width="8" stroke-linecap="round" fill="none"/>
+
+  <!-- Vertical line down -->
+  <path d="M 85 45 L 85 75" stroke="white" stroke-width="8" stroke-linecap="round" fill="none"/>
+
+  <!-- Arrow pointing left -->
+  <path d="M 85 75 L 35 75 L 45 65 M 35 75 L 45 85" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 </svg>
